@@ -1,0 +1,11 @@
+if which kubectl >/dev/null; then
+
+    # aliases and completion
+    alias k=kubectl
+    source <(kubectl completion bash)
+    complete -o default -F __start_kubectl k
+
+    # krew for kubelogin & others
+    export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+
+fi

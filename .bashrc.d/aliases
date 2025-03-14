@@ -1,0 +1,12 @@
+# Like grep, but instead of filtering it colorizes output
+alias cgrep='grep --color=always -e "^" -p "$@"'
+
+# Full timestamps
+alias dmesg='dmesg -T'
+
+# The usual ls aliases
+alias ls='ls --color=auto --hyperlink=auto -F -h'
+alias ll='ls -l'
+alias la='ls -la'
+alias l.='ls -ld .* --color=auto'
+alias lrt='ls -lrt'
