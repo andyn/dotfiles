@@ -1,3 +1,8 @@
 if [ -d ~/.venv ]; then
     source ~/.venv/bin/activate
+else
+    python3 -m venv ~/.venv
+    source ~/.venv/bin/activate
+    uv pip install --upgrade pip || pip install --upgrade pip
+    uv pip install -r ~/.requirements.txt || pip install -r ~/.requirements.txt
 fi
