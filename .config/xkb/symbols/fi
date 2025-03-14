@@ -1,0 +1,12 @@
+partial alphanumeric_keys
+xkb_symbols "programmer" {
+    include "fi(fi)"
+    name[Group1]="Finnish (programmer)";
+
+    key <TLDE> { [ grave,        asciitilde, dead_tilde,  asciitilde  ] };
+    key <AD07> { [ u,            U,          udiaeresis,  Udiaeresis  ] };
+    key <AD09> { [ o,            O,          aring,       Aring       ] };
+    key <AD11> { [ bracketleft,  braceleft,  bracketleft, braceleft   ] };
+    key <AD12> { [ bracketright, braceright, asciicircum, asciicircum ] };
+    key <AB10> { [ minus,        underscore, endash,      emdash      ] };
+};
