@@ -2,7 +2,13 @@ __bash_git_branch () {
     if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
         BRANCH=$(git symbolic-ref --short HEAD 2>/dev/null || git describe --tags --exact-match 2>/dev/null || git rev-parse --short HEAD 2>/dev/null)
         STATUS=$(git status --porcelain=v2 --branch --show-stash)
-        DIRTY=$(git diff --quiet || echo "!")
+        if ! git diff --quiet; then
+            DIRTY="‼"
+        elif ! git ls-files --others --exclude-standard --quiet; then
+            DIRTY="!"
+        else
+            DIRTY=""
+        fi
         AHEAD="$(echo " $(echo "${STATUS}" | grep -F "# branch.ab" | cut -d" " -f3)" | grep -- "+[1-9]")"
         BEHIND="$(echo " $(echo "${STATUS}" | grep -F "# branch.ab" | cut -d" " -f4)" | grep -- "-[1-9]")"
         STASH="$(echo " ~$(echo "${STATUS}" | grep -F "# stash" | cut -d" " -f3)" | grep -- "[1-9]")"
