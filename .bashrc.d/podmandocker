@@ -1,0 +1,2 @@
+# Docker first if installed, otherwise podman
+alias docker=$( (which docker 2>/dev/null; which podman 2>/dev/null) | head -1)
