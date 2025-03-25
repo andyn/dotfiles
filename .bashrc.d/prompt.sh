@@ -1,14 +1,31 @@
 __bash_git_branch () {
-    if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+    if (git rev-parse --is-inside-work-tree | grep true) >/dev/null 2>&1; then
+        FETCH_HEAD="$(git rev-parse --show-toplevel)/.git/FETCH_HEAD"
+        if [ -f ${FETCH_HEAD} ]; then
+            FETCHED_AT=$(stat -c %Y ${FETCH_HEAD})
+        else
+            FETCHED_AT=0
+        fi
+        NOW=$(date +%s)
+        if [ $(($NOW - $FETCHED_AT)) -ge 900 ]; then
+            tput sc
+            echo -en "" && tput civis; tput cnorm
+            git fetch --no-tags --prune --filter=blob:none >/dev/null 2>&1;
+            tput rc
+            tput el
+        fi
+
         BRANCH=$(git symbolic-ref --short HEAD 2>/dev/null || git describe --tags --exact-match 2>/dev/null || git rev-parse --short HEAD 2>/dev/null)
         STATUS=$(git status --porcelain=v2 --branch --show-stash)
-        if ! git diff --quiet; then
+
+        if ! git diff --quiet ; then
             DIRTY="!"
-        elif git status --porcelain | grep '^??' >/dev/null ; then
+        elif git status --porcelain | grep '^??' >/dev/null; then
             DIRTY="*"
         else
             DIRTY=""
         fi
+
         AHEAD="$(echo " $(echo "${STATUS}" | grep -F "# branch.ab" | cut -d" " -f3)" | grep -- "+[1-9]")"
         BEHIND="$(echo " $(echo "${STATUS}" | grep -F "# branch.ab" | cut -d" " -f4)" | grep -- "-[1-9]")"
         STASH="$(echo " ~$(echo "${STATUS}" | grep -F "# stash" | cut -d" " -f3)" | grep -- "[1-9]")"
@@ -37,7 +54,9 @@ __bash_kube_context_or_hostname () {
 }
 
 __bash_check_empty_line () {
-    PS1="$(__bash_kube_context_or_hostname):\[\033[01;34m\]\W$(__bash_git_branch)\[\033[00m\]\[\e[91m\]\[\e[00m\]$ "
+    KUBE_CONTEXT="$(__bash_kube_context_or_hostname)"
+    GIT_BRANCH="$(__bash_git_branch)"
+    PS1="${KUBE_CONTEXT}:\[\033[01;34m\]\W${GIT_BRANCH}\[\033[00m\]\[\e[91m\]\[\e[00m\]$ "
 
     prompt_command__isnewline__last="$prompt_command__isnewline__curr"
     prompt_command__isnewline__curr="$(history 1 | sed 's/^[[:space:]]*[0-9]\+[[:space:]]*//')"
@@ -47,3 +66,7 @@ __bash_check_empty_line () {
 }
 
 export PROMPT_COMMAND=__bash_check_empty_line
+
+
+#fatal: this operation must be run in a work tree
+#git rev-parse --show-toplevel
