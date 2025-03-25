@@ -3,9 +3,9 @@ __bash_git_branch () {
         BRANCH=$(git symbolic-ref --short HEAD 2>/dev/null || git describe --tags --exact-match 2>/dev/null || git rev-parse --short HEAD 2>/dev/null)
         STATUS=$(git status --porcelain=v2 --branch --show-stash)
         if ! git diff --quiet; then
-            DIRTY="‼"
-        elif ! git ls-files --others --exclude-standard; then
             DIRTY="!"
+        elif git status --porcelain | grep '^??' >/dev/null ; then
+            DIRTY="*"
         else
             DIRTY=""
         fi
