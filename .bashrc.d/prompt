@@ -1,7 +1,11 @@
 __bash_git_branch () {
     BRANCH=$(git branch --show-current 2>/dev/null)
     if [ $? -eq 0 ]; then
-        echo "\[\033[38;5;214m\]⌥ $BRANCH\[\033[0m\]"
+        STATUS=$(git status --porcelain=v2 --branch --show-stash)
+        AHEAD=$(echo "$STATUS" | grep -F "# branch.ab" | cut -d" " -f3)
+        BEHIND=$(echo "$STATUS" | grep -F "# branch.ab" | cut -d" " -f4)
+        STASH=$(echo "$STATUS" | grep -F "# stash" | cut -d" " -f3)
+        echo -e "\e[38;5;214m\]⌥ $BRANCH \e[1;32m$AHEAD\e[0m \e[1;31m$BEHIND\e[0m \e[1;34m$STASH\e[0m\]"
     fi
 }
 
