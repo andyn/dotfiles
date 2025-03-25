@@ -4,7 +4,7 @@ __bash_git_branch () {
         STATUS=$(git status --porcelain=v2 --branch --show-stash)
         if ! git diff --quiet; then
             DIRTY="‼"
-        elif ! git ls-files --others --exclude-standard --quiet; then
+        elif ! git ls-files --others --exclude-standard; then
             DIRTY="!"
         else
             DIRTY=""
