@@ -1,7 +1,7 @@
 alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
 __dotfiles_init () {
-    git clone --bare git@github.com:andyn/dotfiles.giti ~/.dotfiles
+    git clone --bare git@github.com:andyn/dotfiles.git ~/.dotfiles
     dotfiles config --local status.showUntrackedFiles no
     dotfiles checkout
 }
