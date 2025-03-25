@@ -53,10 +53,23 @@ __bash_kube_context_or_hostname () {
     fi
 }
 
-__bash_check_empty_line () {
+__bash_exit_status () {
+    local status=$?
+    if [ $status -eq 0 ]; then
+        return
+    elif [ $status -ge 128 ] && [ $status -lt 255 ]; then
+        local signal_name=$(kill -l $((status - 128)))
+        echo -ne "\[\e[1;31m\]$signal_name \[\e[0m\]"
+    else
+        echo -ne "\[\e[1;31m\]$status \[\e[0m\]"
+    fi
+}
+
+__bash_prompt () {
+    EXIT_STATUS=$"$(__bash_exit_status)"
     KUBE_CONTEXT="$(__bash_kube_context_or_hostname)"
     GIT_BRANCH="$(__bash_git_branch)"
-    PS1="${KUBE_CONTEXT}:\[\033[01;34m\]\W${GIT_BRANCH}\[\033[00m\]\[\e[91m\]\[\e[00m\]$ "
+    PS1="${EXIT_STATUS}${KUBE_CONTEXT}:\[\033[01;34m\]\W${GIT_BRANCH}\[\033[00m\]\[\e[91m\]\[\e[00m\]$ "
 
     prompt_command__isnewline__last="$prompt_command__isnewline__curr"
     prompt_command__isnewline__curr="$(history 1 | sed 's/^[[:space:]]*[0-9]\+[[:space:]]*//')"
@@ -65,8 +78,4 @@ __bash_check_empty_line () {
     fi
 }
 
-export PROMPT_COMMAND=__bash_check_empty_line
-
-
-#fatal: this operation must be run in a work tree
-#git rev-parse --show-toplevel
+export PROMPT_COMMAND=__bash_prompt
