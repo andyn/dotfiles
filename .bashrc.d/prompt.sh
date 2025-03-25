@@ -5,7 +5,7 @@ __bash_git_branch () {
         AHEAD=$(echo "$STATUS" | grep -F "# branch.ab" | cut -d" " -f3)
         BEHIND=$(echo "$STATUS" | grep -F "# branch.ab" | cut -d" " -f4)
         STASH=$(echo "$STATUS" | grep -F "# stash" | cut -d" " -f3)
-        echo -e "\e[38;5;214m\]⌥ $BRANCH \e[1;32m$AHEAD\e[0m \e[1;31m$BEHIND\e[0m \e[1;34m$STASH\e[0m\]"
+        echo -e "\[\e[38;5;214m\]⌥ $BRANCH \[\e[1;32m\]$AHEAD\[\e[0m\] \[\e[1;31m\]$BEHIND\[\e[0m\] \[\e[1;34m\]$STASH\[\e[0m\]"
     fi
 }
 
@@ -13,7 +13,7 @@ __bash_kube_context () {
     CONTEXT=$(kubectl config current-context 2>/dev/null)
     if [ $? -eq 0 ]; then
         NAMESPACE=$(kubectl config view --minify -o jsonpath='{..namespace}')
-        echo -e "\e[1;38;5;33m⎈ $CONTEXT/$NAMESPACE\e[0m"
+        echo -e "\[\e[1;38;5;33m\]⎈ $CONTEXT/$NAMESPACE\[\e[0m\]"
         return 0
     else
         return 1
