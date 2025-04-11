@@ -10,3 +10,8 @@ alias ll='ls -l'
 alias la='ls -la'
 alias l.='ls -ld .* --color=auto'
 alias lrt='ls -lrt'
+
+# Misc
+if which fzf >/dev/null; then
+    source <(fzf --bash)
+fi
