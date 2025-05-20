@@ -1,0 +1,3 @@
+if [ -d ~/Applications ]; then
+    PATH="${PATH}:$(find ~/Applications -maxdepth 2 -type d -name bin -print0 | tr '\0' ':')"
+fi
