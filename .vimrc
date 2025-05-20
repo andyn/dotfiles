@@ -27,8 +27,11 @@ colorscheme monokai
 syntax enable
 filetype plugin indent on
 
+set shiftwidth=4
 set tabstop=4
 set expandtab
+set smarttab
+set backspace=indent,eol,start
 
 " advanced mouse use
 " set mouse=a
