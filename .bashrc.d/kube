@@ -2,6 +2,8 @@ if which kubectl >/dev/null; then
 
     # aliases and completion
     alias k=kubectl
+    alias k-events="kubectl get events --sort-by='.lastTimestamp'"
+
     source <(kubectl completion bash)
     complete -o default -F __start_kubectl k
 
