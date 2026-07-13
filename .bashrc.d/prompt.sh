@@ -1,8 +1,8 @@
 __bash_git_branch () {
     if (git rev-parse --is-inside-work-tree | grep true) >/dev/null 2>&1; then
-        FETCH_HEAD="$(git rev-parse --show-toplevel)/.git/FETCH_HEAD"
-        if [ -f ${FETCH_HEAD} ]; then
-            FETCHED_AT=$(stat -c %Y ${FETCH_HEAD})
+        FETCH_HEAD="$(git rev-parse --git-path FETCH_HEAD)"
+        if [ -f "${FETCH_HEAD}" ]; then
+            FETCHED_AT=$(stat -c %Y "${FETCH_HEAD}")
         else
             FETCHED_AT=0
         fi
