@@ -1,9 +1,9 @@
-font-family = Source Code Pro Medium
-font-family-bold = Source Code Pro Bold
+font-family = Source Code Pro Semibold
+font-family-bold = Source Code Pro Black
 font-family-italic = Source Code Pro Medium
 font-style-italic = Italic
 font-family-bold-italic = Source Code Pro
-font-style-bold-italic = Bold Italic
+font-style-bold-italic = Black Italic
 
 font-size = 10
 font-thicken=true
