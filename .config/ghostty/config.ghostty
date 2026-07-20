@@ -1,0 +1,22 @@
+font-family = Source Code Pro Medium
+font-family-bold = Source Code Pro Bold
+font-family-italic = Source Code Pro Medium
+font-style-italic = Italic
+font-family-bold-italic = Source Code Pro
+font-style-bold-italic = Bold Italic
+
+font-size = 10
+font-thicken=true
+font-thicken-strength=1
+adjust-cell-height = 10%
+
+window-decoration = server
+
+theme = Tomorrow Night
+background = #000000
+bold-color = bright
+
+cursor-style = block
+cursor-style-blink = false
+#shell-integration-features = no-cursor
+
