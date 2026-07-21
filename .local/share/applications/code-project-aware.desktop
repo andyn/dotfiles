@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=Visual Studio Code (project-aware)
+Comment=Open files in their Git repository
+Exec=/home/anilakar/.local/bin/code %f
+Icon=visual-studio-code
+Terminal=false
+Categories=Development;IDE;TextEditor;
+MimeType=text/plain;
+StartupNotify=true
