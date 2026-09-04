@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 
-path=$(realpath "$1")
+if [ -z "${1}" ]; then
+    path=$(realpath $(pwd))
+else
+    path=$(realpath "${1}")
+fi
 
 if [[ -d $path ]]; then
     dir=$path
@@ -9,6 +13,7 @@ else
 fi
 
 if root=$(git -C "$dir" rev-parse --show-toplevel 2>/dev/null); then
+    >&2 echo "Inside a git repo; opening ${root}"
     exec /usr/bin/code "$root" "$path"
 else
     exec /usr/bin/code "$dir" "$path"
