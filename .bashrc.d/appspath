@@ -1,3 +1,16 @@
+# Nested shells inherit PATH, so every entry has to be added at most once.
+__path_append () {
+    case ":$PATH:" in
+        *":$1:"*) ;;
+        *) PATH="$PATH:$1" ;;
+    esac
+}
+
 if [ -d ~/Applications ]; then
-    PATH="${PATH}:$(find ~/Applications -maxdepth 2 -type d -name bin -print0 | tr '\0' ':')"
+    while IFS= read -r -d '' dir; do
+        __path_append "$dir"
+    done < <(find ~/Applications -maxdepth 4 -type d -name bin -print0)
+    unset dir
 fi
+
+__path_append "$HOME/.cargo/bin"

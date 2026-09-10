@@ -8,6 +8,9 @@ if which kubectl >/dev/null; then
     complete -o default -F __start_kubectl k
 
     # krew for kubelogin & others
-    export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+    case ":$PATH:" in
+        *":${KREW_ROOT:-$HOME/.krew}/bin:"*) ;;
+        *) export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH" ;;
+    esac
 
 fi
