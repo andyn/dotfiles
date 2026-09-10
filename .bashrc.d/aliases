@@ -15,3 +15,12 @@ alias lrt='ls -lrt'
 if which fzf >/dev/null; then
     source <(fzf --bash)
 fi
+
+# start.exe
+x() {
+    if [ "$#" -eq 0 ]; then
+        xdg-open .
+    else
+        xdg-open "$@"
+    fi
+}
