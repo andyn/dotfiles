@@ -13,7 +13,15 @@ else
 fi
 
 if root=$(git -C "$dir" rev-parse --show-toplevel 2>/dev/null); then
-    >&2 echo "Inside a git repo; opening ${root}"
+    ws=("$root"/*.code-workspace)
+    if [[ ${#ws[@]} -eq 1 && -f ${ws[0]} ]]; then
+        >&2 echo "Opening VS Code workspace ${ws[0]}"
+        if [[ $path == "${ws[0]}" || -d $path ]]; then
+            exec /usr/bin/code "${ws[0]}"
+        fi
+        exec /usr/bin/code "${ws[0]}" "$path"
+    fi
+    >&2 echo "Opening git repo ${root}"
     exec /usr/bin/code "$root" "$path"
 else
     exec /usr/bin/code "$dir" "$path"
